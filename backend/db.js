@@ -15,12 +15,18 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License. */
 
-const app = require("./app");
-const db = require("./db");
+const mongoose = require("mongoose");
 
-db.connect().then(() => {
-    console.log("Connected to MongoDB: " + db.url);
-});
+const dbUrl = process.env.DB_URL || "mongodb://localhost/samfree";
 
-const port = process.env.PORT || 3001;
-app.listen(port, () => console.log(`Server started on port ${port}...`));
+const connect = async () => {
+    await mongoose.connect(dbUrl, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+    });
+    console.log("Connected to MongoDB: " + dbUrl);
+};
+
+const close = () => mongoose.connection.close();
+
+module.exports = { connect, close, url: dbUrl };

@@ -10,6 +10,6 @@ RUN npm install
 USER app
 COPY . . 
 
-EXPOSE 3000 
+EXPOSE 5001 
 
-CMD ["node", "index.js"]
+CMD ["npm", "start"]
