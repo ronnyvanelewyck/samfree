@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 USER root
 RUN npm install
-USER app
+
 COPY . . 
 
 EXPOSE 5001 

@@ -1,16 +1,9 @@
 version: "0.0.1"
 
 services:
-  frontend:
+  sam-backend: 
     depends_on: 
-      - backend
-    build: ./frontend
-    ports:
-      - 3000:3000
-
-  backend: 
-    depends_on: 
-      - db
+      - mongo
     build: ./backend
     ports: 
       - 5001:5001
@@ -18,12 +11,30 @@ services:
       DB_URL: mongodb://db/samfree
     command: ./docker-entrypoint.sh
 
-  db:
-    image: mongo:7.0.2
+  mongo:
+    image: mongo
+    environment:
+        - MONGO_INITDB_ROOT_USERNAME=admin
+        - MONGO_INITDB_ROOT_PASSWORD=admin
+    restart: unless-stopped
     ports:
       - 27017:27017
     volumes:
       - samfree:/data/db
+
+  mongo-workbench:
+    image: mongo-express
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
+      - ME_CONFIG_MONGODB_URL=mongodb://admin:admin@mongo:27017/?authSource=admin
+      - ME_CONFIG_BASICAUTH_USERNAME=mexpress
+      - ME_CONFIG_BASICAUTH_PASSWORD=mexpress
+    links:
+      - mongo
+    restart: unless-stopped
+    ports:
+      - 8081:8081
 
 volumes:
   samfree:

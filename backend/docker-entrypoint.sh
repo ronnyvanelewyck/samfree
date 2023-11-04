@@ -3,9 +3,9 @@
 echo "Waiting for MongoDB to start..."
 ./wait-for db:27017 
 
-echo "Populate the databse..."
+echo "Populate the MongoDB database..."
 npm run db:up 
 
 echo "Starting the server..."
-node app.js
+npm start
 

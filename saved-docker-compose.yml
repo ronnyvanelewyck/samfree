@@ -1,0 +1,29 @@
+version: "0.0.1"
+
+services:
+  frontend:
+    depends_on: 
+      - backend
+    build: ./frontend
+    ports:
+      - 3000:3000
+
+  backend: 
+    depends_on: 
+      - db
+    build: ./backend
+    ports: 
+      - 5001:5001
+    environment: 
+      DB_URL: mongodb://db/samfree
+    command: ./docker-entrypoint.sh
+
+  db:
+    image: mongo:7.0.2
+    ports:
+      - 27017:27017
+    volumes:
+      - samfree:/data/db
+
+volumes:
+  samfree:
