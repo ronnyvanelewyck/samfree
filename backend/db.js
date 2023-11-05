@@ -17,13 +17,14 @@ under the License. */
 
 const mongoose = require("mongoose");
 
-const dbUrl = process.env.DB_URL || "mongodb://localhost/samfree"; // http://localhost:27017
+
+// use the mongoDB service name as defined in docker-compose.yml file
+const dbUrl = process.env.DB_URL || "mongodb://mongo/samfree"; 
 
 
 const connect = async () => {
     await mongoose.connect(dbUrl, {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
+
     });
     console.log("Connected to MongoDB: " + dbUrl);
 };
