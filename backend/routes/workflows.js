@@ -16,19 +16,21 @@ specific language governing permissions and limitations
 under the License. */
 
 const express = require("express");
-const cors = require("cors");
-const homeRoutes = require("./routes/home");
-const workflowRoutes = require("./routes/workflows");
-
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-
-app.use("/", homeRoutes);
-app.use("/api/", homeRoutes);
-app.use("/api/workflows", workflowRoutes);
-
-module.exports = app;
+const router = express.Router();
+const validateObjectId = require('../middleware/validateObjectId')
+const { Workflow } = require('../models/workflow');
 
 
+/* R(EAD) - GET */
+// get all workflows
+router.get("/", async (req, res) => {
+  const workflow = await Workflow.find().select('-__v');
+  res.send(workflow);
+});
+// get workflow by id
+router.get("/:id", validateObjectId, async (req, res) => {
+  const workflow = await Workflow.find({ _id: req.params.id }).select();
+  res.send(workflow);
+});
+
+module.exports = router;

@@ -16,42 +16,16 @@ specific language governing permissions and limitations
 under the License. */
 
 const mongoose = require("mongoose");
-const Joi = require("joi");
 
-// don't pluralise name of db
-mongoose.pluralize(null);
 
-// company
-const companySchema = new mongoose.Schema({
-  name1: {
-    type: String,
-    required: true,
-    minlength: 3,
-    maxlength: 10,
-    trim: true
-  },
-  name2: {
-    type: String,
-    required: true,
-    minlength: 3,
-    maxlength: 80,
-    trim: true
-  }
-});
+module.exports = function (req, res, next) {
 
-// company model
-const Company = mongoose.model("company", companySchema);
+  // check if id is valid
+  if (!mongoose.Types.ObjectId.isValid(req.params.id))
+    return res
+      .status(404)
+      .json({ code: '404', error: `Id ${req.params.id} invalid format` });
 
-// validations
-function validateCompany(company) {
-  const schema = Joi.object({
-    name1: Joi.string().min(3).max(80).required(),
-    name2: Joi.string().min(1).max(80).required()
-  });
-  return schema.validate(company);
+  next();
+
 }
-
-module.exports = {
-  Company,
-  validateCompany,
-};

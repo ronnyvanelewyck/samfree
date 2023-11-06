@@ -6,6 +6,7 @@ echo "Waiting for MongoDB to start..."
 echo "Populate the MongoDB database..."
 npm run db:up 
 
+
 echo "Starting the server..."
 npm start
 

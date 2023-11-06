@@ -17,18 +17,18 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - samfree:/data/db
+      - diskspace:/data/db
 
-  mongo-workbench:
+  mongo-express:
     image: mongo-express
+    restart: unless-stopped
     environment:
       - ME_CONFIG_BASICAUTH_USERNAME=mexpress
       - ME_CONFIG_BASICAUTH_PASSWORD=mexpress
     links:
       - mongo
-    restart: unless-stopped
     ports:
       - 8081:8081
 
 volumes:
-  samfree:
+  diskspace:

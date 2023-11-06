@@ -26,7 +26,6 @@ const connect = async () => {
     await mongoose.connect(dbUrl, {
 
     });
-    console.log("Connected to MongoDB: " + dbUrl);
 };
 
 const close = () => mongoose.connection.close();

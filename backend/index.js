@@ -21,12 +21,12 @@ const db = require("./db");
 
 
 db.connect().then(() => {
-    console.log("Connected to MongoDB: " + db.url);
+  console.log("Connected to MongoDB: " + db.url);
 });
 
 
 
 
 const port = process.env.PORT || 5001;
-app.listen(port, () => console.log(`SAM Server started on port ${port}... And try DB connection on ${db.url}...`));
+app.listen(port, () => console.log(`SAM Server started on port ${port}`));
 
