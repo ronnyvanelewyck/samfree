@@ -48,7 +48,7 @@ const workflowSchema = new mongoose.Schema({
     imageurl: {
       type: String,
       minlength: 12,
-      maxlength: 512
+      maxlength: 2048
     },
     chdate: {
       type: Date,
@@ -78,7 +78,7 @@ const workflowSchema = new mongoose.Schema({
       imageurl: {
         type: String,
         minlength: 12,
-        maxlength: 512
+        maxlength: 2048
       }
     }
   ],
@@ -125,7 +125,7 @@ const workflowSchema = new mongoose.Schema({
       imageurl: {
         type: String,
         minlength: 12,
-        maxlength: 512
+        maxlength: 2048
       }
     }
   ],
@@ -162,7 +162,7 @@ const workflowSchema = new mongoose.Schema({
       imageurl1: {
         type: String,
         minlength: 12,
-        maxlength: 512
+        maxlength: 2048
       }      
     }
   ]
@@ -173,15 +173,9 @@ const workflowSchema = new mongoose.Schema({
 const Workflow = mongoose.model('workflow', workflowSchema);
 
 
-// validations
-function validateWorkflow(workflow) {
-
-
-}
 
 module.exports =
 {
   Workflow,
-  validateWorkflow,
   workflowSchema
 } 
