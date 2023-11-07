@@ -1,7 +1,7 @@
 {
   "name": "samfree-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "SAM - Smart Aid Map - Backend",
   "main": "index.js",
   "scripts": {
     "db:up": "migrate-mongo up",

@@ -1,6 +1,15 @@
 version: "0.0.1"
 
 services:
+  frontend: 
+    depends_on: 
+      - backend
+    build: ./frontend
+    ports: 
+      - 3001:3000
+    environment:
+      - WDS_SOCKET_PORT=0
+      
   backend: 
     depends_on: 
       - mongo
