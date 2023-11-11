@@ -20,6 +20,7 @@ const cors = require("cors");
 const homeRoutes = require("./routes/home");
 const workflowRoutes = require("./routes/workflows");
 const taskRoutes = require("./routes/tasks");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use("/", homeRoutes);
 app.use("/api/", homeRoutes);
 app.use("/api/workflows", workflowRoutes);
 app.use("/api/tasks", taskRoutes);
+app.use("/api/auth", authRoutes);
 
 module.exports = app;
 

@@ -15,23 +15,21 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License. */
 
-const express = require("express");
-const router = express.Router();
-const validateObjectId = require('../middleware/validateObjectId')
-const { Workflow } = require('../models/workflow');
-const auth = require('../middleware/auth');
+/* purpose: get all tasks from database */
+
+import axios from "axios";
+import { getUrl } from "./urlService";
 
 
-/* R(EAD) - GET */
-// get all workflows
-router.get("/", [auth] , async (req, res) => {
-  const workflow = await Workflow.find().select('-__v');
-  res.send(workflow);
-});
-// get workflow by id
-router.get("/:id", [auth], validateObjectId, async (req, res) => {
-  const workflow = await Workflow.find({ _id: req.params.id }).select();
-  res.send(workflow);
-});
-
-module.exports = router;
+export async function getAllTasks() {
+  const tasksUrl = getUrl("tasks"); 
+  let tasks = "no-task";
+  await axios.get(tasksUrl)
+    .then(res => {
+      tasks = res.data;     
+    })
+    .catch(err => {
+      tasks = err.message;    
+    });
+  return tasks;
+}

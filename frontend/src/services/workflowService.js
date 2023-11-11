@@ -15,33 +15,21 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License. */
 
+/* purpose: get all workflows from database */
+
 import axios from "axios";
+import { getUrl } from "./urlService";
+
 
 export async function getAllWorkflows() {
- 
-let workflows;
-
-  // "http://localhost:5001/api/workflows"
-
-  await axios.get("http://localhost:5001/api/workflows")
-  .then(res => {
-    const headerDate = res.headers && res.headers.date ? res.headers.date : 'no response date';
-   console.log('Status Code:', res.status);
-   console.log('Date in Response header:', headerDate);
-
-    workflows = res.data;
-
-  /*  for(workflow of workflows) {
-      console.log(`Got workflow with text1: ${workflow.header.text1} ${workflow._id}`);
-    }*/
-  })
-  .catch(err => {
-    console.log('Error: ', err.message);
-  });
-
-
-
-
-
+  const workflowsUrl = getUrl("workflows"); 
+  let workflows = "no-workflow";
+  await axios.get(workflowsUrl)
+    .then(res => {
+      workflows = res.data;     
+    })
+    .catch(err => {
+      workflows = err.message;    
+    });
   return workflows;
 }

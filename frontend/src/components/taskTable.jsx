@@ -15,23 +15,22 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License. */
 
-const express = require("express");
-const router = express.Router();
-const validateObjectId = require('../middleware/validateObjectId')
-const { Workflow } = require('../models/workflow');
-const auth = require('../middleware/auth');
+import React from "react";
+import TaskRow from "./taskRow";
 
+const TaskTable = ({ list }) => {
+  return (
+    <div className="table-responsive">
+      <center>TAKEN</center>
+      <table className="table table-bordered">
+        <tbody>
+          {list.map((list) => (
+            <TaskRow key={list._id} row={list} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
-/* R(EAD) - GET */
-// get all workflows
-router.get("/", [auth] , async (req, res) => {
-  const workflow = await Workflow.find().select('-__v');
-  res.send(workflow);
-});
-// get workflow by id
-router.get("/:id", [auth], validateObjectId, async (req, res) => {
-  const workflow = await Workflow.find({ _id: req.params.id }).select();
-  res.send(workflow);
-});
-
-module.exports = router;
+export default TaskTable;

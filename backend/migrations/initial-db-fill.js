@@ -1,6 +1,24 @@
 module.exports = {
     async up(db, client) {
         await db
+            .collection("user")
+            .insertMany([
+                {
+                    firstname: 'Ron',
+                    lastname: 'Van Elewyck',
+                    email: 'ronvanelewyck@gmail.com',
+                    password: '$2b$10$/iYouRaVYQANLqaAKvYAteOSqKZQpXjw40BN4Q9KHgD7Q8bdcgtlO',
+                    isAdmin: true
+                },
+                {
+                    firstname: 'Karin',
+                    lastname: 'Foucart',
+                    email: 'rvesolutions@gmail.com',
+                    password: '$2b$10$/iYouRaVYQANLqaAKvYAteOSqKZQpXjw40BN4Q9KHgD7Q8bdcgtlO',
+                    isAdmin: false
+                }
+            ]);
+        await db
             .collection("task")
             .insertMany([
                 {

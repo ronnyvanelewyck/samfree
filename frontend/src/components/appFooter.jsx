@@ -14,24 +14,22 @@ software distributed under the License is distributed on an
 KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License. */
+import "../App.css";
 
-const express = require("express");
-const router = express.Router();
-const validateObjectId = require('../middleware/validateObjectId')
-const { Workflow } = require('../models/workflow');
-const auth = require('../middleware/auth');
+import React from "react";
 
 
-/* R(EAD) - GET */
-// get all workflows
-router.get("/", [auth] , async (req, res) => {
-  const workflow = await Workflow.find().select('-__v');
-  res.send(workflow);
-});
-// get workflow by id
-router.get("/:id", [auth], validateObjectId, async (req, res) => {
-  const workflow = await Workflow.find({ _id: req.params.id }).select();
-  res.send(workflow);
-});
 
-module.exports = router;
+const AppFooter = ({
+
+}) => {
+
+
+  return (
+
+      <div className="footerStyle">powered by RVE Solutions</div>
+ 
+  );
+};
+
+export default AppFooter;

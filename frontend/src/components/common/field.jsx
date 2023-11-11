@@ -15,23 +15,17 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License. */
 
-const express = require("express");
-const router = express.Router();
-const validateObjectId = require('../middleware/validateObjectId')
-const { Workflow } = require('../models/workflow');
-const auth = require('../middleware/auth');
+import React from "react";
 
+import "../../App.css";
 
-/* R(EAD) - GET */
-// get all workflows
-router.get("/", [auth] , async (req, res) => {
-  const workflow = await Workflow.find().select('-__v');
-  res.send(workflow);
-});
-// get workflow by id
-router.get("/:id", [auth], validateObjectId, async (req, res) => {
-  const workflow = await Workflow.find({ _id: req.params.id }).select();
-  res.send(workflow);
+const Field = React.forwardRef(({ label, type }, ref) => {
+  return (
+    <div>
+      <label className="labelStyle">{label}</label>
+      <input ref={ref} type={type} className="inputStyle" />
+    </div>
+  );
 });
 
-module.exports = router;
+export default Field;

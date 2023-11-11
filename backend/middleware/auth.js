@@ -15,23 +15,25 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License. */
 
-const express = require("express");
-const router = express.Router();
-const validateObjectId = require('../middleware/validateObjectId')
-const { Workflow } = require('../models/workflow');
-const auth = require('../middleware/auth');
+const jwt = require('jsonwebtoken');
+
+const jwtPrivateKey = "samfreeJWTprivatekey";
+
+function auth(req, res, next) {
+    const token = req.header('x-auth-token');
+    if (!token) return res.status(420).send('Access denied. No valid token provided!');
+
+    try {
+        const decoded = jwt.verify(token, jwtPrivateKey);
+        req.user = decoded;
+        next();
+    }
+    catch {
+
+        res.status(420).send('Access denied. No valid token provided!');
+    }
 
 
-/* R(EAD) - GET */
-// get all workflows
-router.get("/", [auth] , async (req, res) => {
-  const workflow = await Workflow.find().select('-__v');
-  res.send(workflow);
-});
-// get workflow by id
-router.get("/:id", [auth], validateObjectId, async (req, res) => {
-  const workflow = await Workflow.find({ _id: req.params.id }).select();
-  res.send(workflow);
-});
+}
 
-module.exports = router;
+module.exports = auth;

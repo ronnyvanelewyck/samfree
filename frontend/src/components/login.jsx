@@ -15,23 +15,37 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License. */
 
-const express = require("express");
-const router = express.Router();
-const validateObjectId = require('../middleware/validateObjectId')
-const { Workflow } = require('../models/workflow');
-const auth = require('../middleware/auth');
+import React from "react";
+import Field from "./common/field";
+
+import "../App.css";
 
 
-/* R(EAD) - GET */
-// get all workflows
-router.get("/", [auth] , async (req, res) => {
-  const workflow = await Workflow.find().select('-__v');
-  res.send(workflow);
-});
-// get workflow by id
-router.get("/:id", [auth], validateObjectId, async (req, res) => {
-  const workflow = await Workflow.find({ _id: req.params.id }).select();
-  res.send(workflow);
-});
+const Login = ({ onSubmit }) => {
+  const usernameRef = React.useRef();
+  const passwordRef = React.useRef();
 
-module.exports = router;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await onSubmit(usernameRef.current.value, passwordRef.current.value);
+  };
+
+  return (
+      <div className="loginStyle">
+      <form className="formStyle" onSubmit={handleSubmit}>
+        <Field ref={usernameRef} label="email:" type="text" />
+        <Field ref={passwordRef} label="password:" type="password" />
+        <div>
+          <button className="submitStyle" type="submit">
+            MySAM
+          </button>
+        </div>
+      </form>
+      </div>
+
+  );
+};
+
+
+export default Login;
